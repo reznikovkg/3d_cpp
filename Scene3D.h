@@ -11,8 +11,7 @@ private:
 public:
 	Model3D model;
 
-	Scene3D(double X0, double Y0, double px, double py, string fileV, string fileVer) : Camera3D(X0, Y0, px, py)
-	{
+	Scene3D(double X0, double Y0, double px, double py, string fileV, string fileVer) : Camera3D(X0, Y0, px, py) {
 		model = Model3D(fileV,fileVer);
 	}
 	

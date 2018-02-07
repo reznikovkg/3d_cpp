@@ -12,14 +12,13 @@ class Model3D
 		Matrix<int> Verges;
 		Matrix<int> Edges;
 
-
 		int sizeVertices;
 		int sizeEdges;
 
 	public:
 		Model3D() : Vertices(), Edges() {}
 		Model3D(const Matrix<> Vertices, const Matrix<int> Edges) :
-			Vertices(Vertices), Edges(Edges) {}
+		Vertices(Vertices), Edges(Edges) {}
 		Matrix<> GetVertices() { return Vertices; }
 		Matrix<int> GetVerges() { return Verges; }
 		Matrix<int> GetEdges() { return Edges; }
