@@ -10,7 +10,6 @@ Matrix<> Translation(double x, double y, double z)
 		0, 0, 0, 1};
 	return Matrix<>(4,4, T);
 }
-
 Matrix<> Identity()
 {
 	double T[16] = {
@@ -20,7 +19,6 @@ Matrix<> Identity()
 		0,	0,	0, 1};
 	return Matrix<>(4,4, T);
 }
-
 Matrix<> RotationXX(double t)
 {
 	double T[16] = {
@@ -30,7 +28,6 @@ Matrix<> RotationXX(double t)
 		0, 0, 0, 1};
 	return Matrix<>(4,4, T);
 }
-
 Matrix<> RotationYY(double t)
 {
 	double T[16] = {
@@ -50,7 +47,6 @@ Matrix<> RotationZZ(double t)
 		0, 0, 0, 1 };
 	return Matrix<>(4, 4, T);
 }
-
 Matrix<> RotationX(double c, double s)
 {
 	double T[16] = {
@@ -78,7 +74,6 @@ Matrix<> RotationZ(double c, double s)
 			0, 0, 0, 1 };
 	return Matrix<>(4, 4, T);
 }
-
 Matrix<> Scaling(double kx, double ky, double kz)
 {
 	double T[16] = {
@@ -88,8 +83,6 @@ Matrix<> Scaling(double kx, double ky, double kz)
 		0,	0, 0, 1};
 	return Matrix<>(4,4, T);
 }
-
-
 Matrix<> Mapping(double x=1, double y=1, double z=1)
 {
 	double T[16] = {
@@ -99,6 +92,17 @@ Matrix<> Mapping(double x=1, double y=1, double z=1)
 		0,	0, 0, 1 };
 	return Matrix<>(4, 4, T);
 }
+
+
+
+
+
+
+
+
+
+//kinematic after v0.0.2
+
 
 
 #endif AFFINE_TRANSFORM_H

@@ -12,7 +12,8 @@ public:
 	Model3D model;
 
 	Scene3D(double X0, double Y0, double px, double py, string fileV, string fileVer) : Camera3D(X0, Y0, px, py) {
-		model = Model3D(fileV,fileVer);
+		/*model = Model3D(fileV,fileVer);*/
+		model = Model3D(f_1);
 	}
 	
 	void Project()
@@ -26,24 +27,28 @@ public:
 
 
 		//new 
-		/*
-		double mystep = 0.5;
+		Project();
+
 		double mystep2 = 0.2;
 
-		for (double i = -10; i < 10; i+= mystep)
+		for (double i = 1; i <= x_nums; i++)
 		{
 			for (double j = 0; j < 2*M_PI; j+= mystep2)
 			{
-				MoveTo(i + x_t(j), f_1(i) + y_t(j));
-				LineTo(dc, i + x_t(j+ mystep2), f_1(i) + y_t(j+ mystep2));
-				MoveTo(i + x_t(j), f_1(i) + y_t(j));
-				LineTo(dc, i + mystep + x_t(j), f_1(i+mystep) + y_t(j));
+				MoveTo(model.getProjX(i) + x_t(j), model.getProjY(i) + y_t(j));
+				LineTo(dc, model.getProjX(i) + x_t(j+ mystep2), model.getProjY(i) + y_t(j+ mystep2));
+
+				if (i < x_nums) {
+					MoveTo(model.getProjX(i) + x_t(j), model.getProjY(i) + y_t(j));
+					LineTo(dc, model.getProjX(i + 1) + x_t(j), model.getProjY(i + 1) + y_t(j));
+				}
 			}
+
 		}
-		*/
+		
 		//end new
 
-
+		/*
 		Project();
 
 		int kkk = model.GetSizeEdges();
@@ -58,6 +63,7 @@ public:
 				}
 			}
 		}
+		*/
 	}
 
 };

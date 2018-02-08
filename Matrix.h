@@ -76,6 +76,16 @@ public:
 	{
 		return cols;
 	}
+
+
+	void setkinematic(Cell func(Cell x)) {
+		for (int i = 0; i < cols; i++) {
+			cells[0][i] = x_start + x_step*i;
+			cells[1][i] = func(x_start + x_step*i);
+			cells[2][i] = 0;
+			cells[3][i] = 1;
+		}
+	}
 };
 
 template <typename Cell>
@@ -206,8 +216,7 @@ void Matrix<Cell>::AllocateCells(int Rows, int Cols = 0)
 template <typename Cell>
 void Matrix<Cell>::FreeCells()
 {
-	for (int i=0; i<rows; i++)
-		delete cells[i];
+	for (int i=0; i<rows; i++) delete cells[i];
 	delete cells;
 	rows = 0;
 	cols = 0;

@@ -32,7 +32,7 @@ int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		(LPCSTR)"MainWindowClass",					// имя оконного класса
 		(LPCSTR)"Plot3D Viewer",					// заголовок окна
 		WS_OVERLAPPEDWINDOW,						// стиль окна
-		200,200,400,400,							// координаты на экране левого верхнего угла окна, его ширина и высота
+		2400,200,400,400,							// координаты на экране левого верхнего угла окна, его ширина и высота
 		nullptr,nullptr,hInstance,nullptr);
 
 	ShowWindow(hWnd,nCmdShow);

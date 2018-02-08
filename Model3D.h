@@ -9,7 +9,10 @@ class Model3D
 		Matrix<> Vertices;
 		Matrix<> InitialVertices;
 		Matrix<> ProjectedVertices;
+
+		bool _Verges;
 		Matrix<int> Verges;
+		bool _Edges;
 		Matrix<int> Edges;
 
 		int sizeVertices;
@@ -23,11 +26,25 @@ class Model3D
 		Matrix<int> GetVerges() { return Verges; }
 		Matrix<int> GetEdges() { return Edges; }
 		Matrix<> GetInitialVertices() { return InitialVertices; }
-		
-	Model3D(string file_V, string file_Ver) //==Считывание по файлам
+	
+
+		Model3D(Cell func(Cell x)) //Получение каркаса функции
+		{
+			Matrix<> Mij(4, (int)x_nums+1);
+			sizeVertices = x_nums;
+			Mij.setkinematic(func);
+			Vertices = Mij;
+			InitialVertices = Vertices;
+
+			ofstream oin("test.txt");
+			oin << Mij;
+		}
+
+
+
+	Model3D(string file_V, string file_Ver) //Считывание с файла точек тела
 	{
 		string InStr;
-//================================
 		ifstream fin(file_V);
 		fin >> sizeVertices;
 		getline(fin,InStr);
@@ -37,7 +54,6 @@ class Model3D
 		Vertices = Mij;
 		fin.close();
 
-//========================
 		ifstream fin2(file_Ver);
 		int asd;
 		fin2 >> asd;
@@ -51,8 +67,10 @@ class Model3D
 
 		InitialVertices =  Vertices;
 		SetEdges();
+		_Verges = true;
+		_Edges = true;
 	}
-	void SetEdges()
+	void SetEdges() //получение граней по точкам
 	{
 		int sei = Verges.getRows();
 		
