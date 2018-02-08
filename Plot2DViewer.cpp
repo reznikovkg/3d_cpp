@@ -85,14 +85,12 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 
 			if (GET_WHEEL_DELTA_WPARAM(wParam)>0) 
 			{
-				scene.sizeedit(1.1,P.x, P.y);
+				scene.sizeedit(1.1,P.x, P.y); //+++
 			}
 			else
 			{
-				scene.sizeedit(0.9,P.x, P.y);
+				scene.sizeedit(0.9,P.x, P.y); //---
 			}
-
-			
 
 			InvalidateRect(hWnd, nullptr, false);
 			return 0;

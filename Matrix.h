@@ -235,8 +235,4 @@ ostream& operator << (ostream& fo, const Matrix<Cell>& M)
 	}
 	return fo;
 }
-
-
-
-
 #endif MATRIX_H

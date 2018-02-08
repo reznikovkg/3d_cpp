@@ -24,6 +24,26 @@ public:
 	{
 		if (axes) Axes(dc);
 
+
+		//new 
+		/*
+		double mystep = 0.5;
+		double mystep2 = 0.2;
+
+		for (double i = -10; i < 10; i+= mystep)
+		{
+			for (double j = 0; j < 2*M_PI; j+= mystep2)
+			{
+				MoveTo(i + x_t(j), f_1(i) + y_t(j));
+				LineTo(dc, i + x_t(j+ mystep2), f_1(i) + y_t(j+ mystep2));
+				MoveTo(i + x_t(j), f_1(i) + y_t(j));
+				LineTo(dc, i + mystep + x_t(j), f_1(i+mystep) + y_t(j));
+			}
+		}
+		*/
+		//end new
+
+
 		Project();
 
 		int kkk = model.GetSizeEdges();

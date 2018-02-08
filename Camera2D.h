@@ -16,27 +16,27 @@ protected:
 	double previousX, previousY;
 
 
-	int WorldToScreenX(double X)		// Переход от мировых координат к экранным (для абсциссы)
+	int WorldToScreenX(double X)
 	{
 		return (int)(X0+px*X);
 	}
-	int WorldToScreenY(double Y)		// Переход от мировых координат к экранным (для ординаты)
+	int WorldToScreenY(double Y)
 	{
 		return (int)(Y0-py*Y);
 	}
-	double ScreenToWorldX(int X)		// Переход от экранных координат к мировым (для абсциссы)
+	double ScreenToWorldX(int X)
 	{
 		return (X-X0+0.5)/px;
 	}
-	double ScreenToWorldY(int Y)		// Переход от экранных координат к мировым (для ординаты)
+	double ScreenToWorldY(int Y)
 	{
 		return -(Y-Y0+0.5)/py;
 	}
-	double L()							// Абсцисса левой границы рабочей области окна (в мировых координатах)
+	double L()
 	{
 		return -X0/px;
 	}
-	double R()							// Абсцисса правой границы рабочей области окна (в мировых координатах)
+	double R()
 	{
 		return (W-X0)/px;
 	}
@@ -49,16 +49,18 @@ protected:
 		return -(H-Y0)/py;
 	}
 private:
-	double posX, posY;					// Позиция графического курсора в мировых координатах (для функций MoveTo и LineTo)
+	double posX, posY;
 	double oldW,oldH;
 	double oldPX,oldPY;
 public:
 	Camera2D(double X0, double Y0, double px, double py) : X0(X0), Y0(Y0), px(px), py(py)
 	{
-
 	}
 	Camera2D()
-	{}
+	{
+		oldW = 400;
+		oldH = 400;
+	}
 	void Clear(HDC dc)
 	{
 		RECT r;
@@ -72,16 +74,16 @@ public:
 
 		W = r.right+1;
 		H = r.bottom+1;
+		oldPX = px;
+		oldPY = py;
 		
 		if (oldW == 0)
 		{
 			oldW = W;
-			oldPX = px;
 		}
 		if (oldH == 0)
 		{
 			oldH = H;
-			oldPY = py;
 		}
 		
 		double
@@ -90,53 +92,40 @@ public:
 
 		X0=kW*X0;
 		Y0=kW*oldPX/oldPY*Y0+((double)oldH/2)*(kH-kW*(oldPX/oldPY));
-
 		px=kW*oldPX;
 		py=kW*oldPX;
 		
+
 		oldW=W;
 		oldH=H;
-
-		oldPX = px;
-		oldPY = py;
-		// Данная процедура вызывается при изменении размеров окна
-		// В ней задаются значения величин W, H, а также настраиваются значения параметров X0, Y0, px, py таким образом, чтобы обеспечить одинаковые масштабы по координатным осям
 	}
 
 	void MoveTo(double X, double Y)
 	{
 		posX = X;
 		posY = Y;
-		// Перемещение графического курсора (posX, posY)
-		// Обратите внимание, что мы действуем в мировых координатах
 	}
 	void LineTo(HDC dc, double X, double Y)
 	{
 		::MoveToEx(dc, WorldToScreenX(posX), WorldToScreenY(posY), nullptr);
 		::LineTo(dc, WorldToScreenX(X), WorldToScreenY(Y));
 		MoveTo(X,Y);
-		// Отрисовка линии из текущей позиции графического курсора в точку (X, Y) и его перемещение в эту точку
-		// Обратите внимание, что мы действуем в мировых координатах
-		// При отрисовке линии могут быть использованы WinApi функции
-		// ::MoveToEx(dc, Xs, Ys, nullptr) и ::LineTo(dc, Xs, Ys)
 	}
-//==================================================
+
+
+
 	void sizeedit(double k, int XX, int YY)
 	{
 		if (k>0)
 		{
-			
-			if ((px>2)&&(py>2))
-			{
-				X0 -= (k-1)*px*ScreenToWorldX(XX);
-				Y0 += (k-1)*py*ScreenToWorldY(YY);
-				px*=k; 
-				py*=k;
-			}
-
+			px *= k;
+			py *= k;
+			X0 -= (k-1)*px*ScreenToWorldX(XX);
+			Y0 += (k-1)*py*ScreenToWorldY(YY);
 		}
 	}
-//==================================================
+
+
 	void StartDragging(int X, int Y)
 	{
 		isDragging = true;
@@ -156,7 +145,6 @@ public:
 	{
 		return isDragging;
 	}
-//==================================================
 
 
 	void Axes(HDC dc)
