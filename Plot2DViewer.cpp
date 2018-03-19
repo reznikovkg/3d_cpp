@@ -3,13 +3,7 @@
 
 #include "Data.h"
 
-#include "Matrix.h"
-
-#include "AffineTransform.h"
-
-#include "Model3D.h"
-
-#include "Scene3D.h"
+#include "include\reznikovkg_3d.h"
 
 LRESULT _stdcall WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);						// прототип оконной процедуры
 int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)		// основная процедура
@@ -32,7 +26,7 @@ int _stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		(LPCSTR)"MainWindowClass",					// имя оконного класса
 		(LPCSTR)"Plot3D Viewer",					// заголовок окна
 		WS_OVERLAPPEDWINDOW,						// стиль окна
-		2400,200,400,400,							// координаты на экране левого верхнего угла окна, его ширина и высота
+		200,200,400,400,							// координаты на экране левого верхнего угла окна, его ширина и высота
 		nullptr,nullptr,hInstance,nullptr);
 
 	ShowWindow(hWnd,nCmdShow);
@@ -98,10 +92,10 @@ LRESULT _stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)		// 
 	case WM_LBUTTONDOWN:
 		{
 			POINT P;
-P.x = GET_X_LPARAM(lParam);
-P.y = GET_Y_LPARAM(lParam);
-ScreenToClient(hWnd, &P);
-scene.StartDragging(P.x, P.y);
+			P.x = GET_X_LPARAM(lParam);
+			P.y = GET_Y_LPARAM(lParam);
+			ScreenToClient(hWnd, &P);
+			scene.StartDragging(P.x, P.y);
 
 			//scene.StartDragging(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 		}
@@ -110,9 +104,9 @@ scene.StartDragging(P.x, P.y);
 			if (scene.IsDragging())
 			{
 				POINT P;
-P.x = GET_X_LPARAM(lParam);
-P.y = GET_Y_LPARAM(lParam);
-ScreenToClient(hWnd, &P);
+				P.x = GET_X_LPARAM(lParam);
+				P.y = GET_Y_LPARAM(lParam);
+				ScreenToClient(hWnd, &P);
 
 				scene.Drag(P.x, P.y);
 				InvalidateRect(hWnd, nullptr, false);
@@ -213,28 +207,24 @@ ScreenToClient(hWnd, &P);
 				double c = z1-z2;
 
 				Matrix<> MyNewAP = Translation(-x1, -y1, -z1);
-				if (c!=0)
-				{
-				
-				double mySQRT = sqrt((a)*(a)+(b)*(b)+(c)*(c));
-				double mySQRT_BC = sqrt((b)*(b)+(c)*(c));
+				if (c!=0) {
+					double mySQRT = sqrt((a)*(a)+(b)*(b)+(c)*(c));
+					double mySQRT_BC = sqrt((b)*(b)+(c)*(c));
 
-				double cA = (a)/mySQRT;
-				double sA = mySQRT_BC/mySQRT;
+					double cA = (a)/mySQRT;
+					double sA = mySQRT_BC/mySQRT;
 
-				double cB = (b)/mySQRT_BC;
-				double sB = (c)/mySQRT_BC;
+					double cB = (b)/mySQRT_BC;
+					double sB = (c)/mySQRT_BC;
 
 
-				MyNewAP = RotationX(cB,-sB)*MyNewAP;
-				MyNewAP = RotationZ(cA,-sA)*MyNewAP;
-				MyNewAP = RotationXX(M_PI/12)*MyNewAP;
-				MyNewAP = RotationZ(cA,sA)*MyNewAP;
-				MyNewAP = RotationX(cB,sB)*MyNewAP;
-				
+					MyNewAP = RotationX(cB,-sB)*MyNewAP;
+					MyNewAP = RotationZ(cA,-sA)*MyNewAP;
+					MyNewAP = RotationXX(M_PI/12)*MyNewAP;
+					MyNewAP = RotationZ(cA,sA)*MyNewAP;
+					MyNewAP = RotationX(cB,sB)*MyNewAP;
 				}
-				else
-				{
+				else {
 					double mySQRT = sqrt((a)*(a)+(b)*(b));
 
 					double cA = (a)/mySQRT;
@@ -251,7 +241,6 @@ ScreenToClient(hWnd, &P);
 				scene.Project();
 				break;
 			}
-
 			case VK_NUMPAD6:
 			{
 				double x1 = scene.model.GetVertexX(1)/scene.model.GetVertexOdn(1);
@@ -298,9 +287,6 @@ ScreenToClient(hWnd, &P);
 				*/
 				
 
-
-
-
 				Matrix<> MyNewAP = Translation(-x1, -y1, -z1);
 				
 				MyNewAP = RotationX(cB,-sB)*MyNewAP;
@@ -318,13 +304,10 @@ ScreenToClient(hWnd, &P);
 				scene.Project();
 				break;
 			}
-
-			/* ... */
 			}
 			InvalidateRect(hWnd, nullptr, false);
 			return 0;
 		}
-
 
 	default:
 		{
